@@ -1,0 +1,30 @@
+
+ <% if user_signed_in? %>
+ <h2>Jesteś zalogowany jako:  <font color="green"><%=h @user.email %></font><% @users.each do |user| %><% if current_user == user %>  <%= link_to 'Mój profil', user %><% else %><%end%><%end%></h2><font color="green"><h4><li><%= link_to "Wyloguj",destroy_user_session_url,:method =>'delete' %></li></h4></font>
+  
+ <font color="blue"><h1> LISTA OSÓB</h1></font>
+<br>
+ <% @users.each do |user| %>
+<% if current_user == user %>
+  
+<% else %>
+   <h3>- <%= user.email %>
+<%= link_to 'Szczegóły', user %>
+
+ 
+<% if current_user.not_friends_with?(user.id) %> 
+  <%= link_to "Dodaj przyjaciela", friendships_path(:friend_id => user), :method => :post %> 
+  <%else%>
+ Już jestescie przyjaciółmi!!
+<%end%>
+<br></h4>
+<%end%>
+<%end%>
+<% else %>
+<font color="green"><h4><li><%=link_to "Zaloguj", new_user_session_url%></li></h4></font>
+ <% end %>
+
+<% if user_signed_in? %>
+<%else%>
+<a href="users/sign_up">Zarejestruj się</a>
+<%end%>

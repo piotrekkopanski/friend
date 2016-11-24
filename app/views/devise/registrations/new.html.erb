@@ -1,0 +1,52 @@
+
+<div class="container3">
+ <center><l><h2>Zarejestruj się</h2></l> </center>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <center><div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true %>
+  </div></center>
+   <center><div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+  </div> </center>
+    <center><div class="field">
+    <%= f.label :surname %><br />
+    <%= f.text_field :surname %>
+  </div> </center>
+   <center> <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone %>
+  </div> </center>
+
+   <center><div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off", id: "password" %>
+  </div> </center>
+
+   <center><div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off", id: "password" %>
+  </div> </center>
+
+   <center><div class="actions">
+    <%= f.submit "Zarejestruj sie" %>
+  </div> </center>
+<% end %>
+
+ <center><%= render "devise/shared/links" %> </center>
+ </div>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquery.maskedinput.js" type="text/javascript"></script>
+<script>
+jQuery(function($){
+   $("#user_phone").mask("999-999-999",{placeholder:"ddd-ddd-ddd"});
+   });
+</script>
+					

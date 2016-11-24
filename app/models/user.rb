@@ -1,0 +1,25 @@
+class User < ActiveRecord::Base
+has_many :friendships 
+has_many :friends, :through => :friendships
+
+
+
+has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+has_many :inverse_friends, :through => :inverse_friendships, :source => :user
+  scope :friend_with, ->( other ) do
+    other = other.id if other.is_a?( User )
+    where( '(friendships.user_id = users.id AND friendships.friend_id = ?) OR (friendships.user_id = ? AND friendships.friend_id = users.id)', other, other ).includes( :frienships )
+  end
+  def not_friends_with?(friend_id)
+    friendships.where(friend_id: friend_id).count<1
+  end
+  def friend_with?( other )
+    User.where( id: id ).friend_with( other ).any?
+  end
+
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+
+end

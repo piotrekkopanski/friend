@@ -1,0 +1,107 @@
+
+<% if current_user.id == @user.id %>
+Witaj <h3> <font color="green"><%=h @user.email %></font> Twoje Dane:  </h3> 
+Imie: <strong><%=h @user.username %></strong>
+Nazwisko:<strong> <%=h @user.surname %></strong>
+telefon :<strong> <%= @user.phone %></strong><font color="green"><h4><li><%= link_to "Wyloguj",destroy_user_session_url,:method =>'delete' %></li></h4></font> <p><a href="edit">Edytuj dane</a></p>
+<p><button class="b1"><%= link_to "Dodaj przyjaciela", users_path %></button></p>
+
+
+<h2>Twoi przyjaciele:</h2>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Imie</th>
+      <th>Nazwisko</th>
+      <th>email</th>
+      <th>numer telefonu</th>
+      <th>akcja</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% for friendship in @user.friendships %>
+    <tr>
+      <th scope="row"><%= @t=@t+1 %></th>
+      <td><% if friendship.friend.username.present? %><%=h friendship.friend.username.gsub(/\s+/, '').capitalize %> <% else%> ---<%end%></td>
+      <td><% if friendship.friend.surname.present? %><%=h friendship.friend.surname.gsub(/\s+/, '').capitalize %><% else%> ---<%end%></td>
+      <td><%=h friendship.friend.email %></td>
+       <td><%=h friendship.friend.phone %></td>
+      <td> <%= link_to "Usuń", friendship, :method => :delete %>, <a href="<%=h friendship.friend.id %>">Szczegóły</a></td>
+    </tr>
+
+    <% end %>
+  </tbody>
+</table>
+
+
+<h2>Do grona przyjaciół dodali Cie:</h2>
+
+<%else%>
+<h3> <font color="green"><%=h @user.email %></font> Dane osoby: </h3>
+Imie: <strong><%=h @user.username %></strong>
+Nazwisko:<strong> <%=h @user.surname %></strong>
+telefon :<strong> <%= @user.phone %></strong>
+<p><%= link_to "Szukaj przyjaciół", users_path %></p>
+
+
+<h2>Przyjaciele osoby:</h2>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Imie</th>
+      <th>Nazwisko</th>
+      <th>email</th>
+      <th>numer telefonu</th>
+      <th>akcja</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% for friendship in @user.friendships %>
+    <tr>
+      <th scope="row"><%= @t=@t+1 %></th>
+      <td><% if friendship.friend.username.present? %><%=h friendship.friend.username.gsub(/\s+/, '').capitalize %> <% else%> ---<%end%></td>
+      <td><% if friendship.friend.surname.present? %><%=h friendship.friend.surname.gsub(/\s+/, '').capitalize %><% else%> ---<%end%></td>
+      <td><%=h friendship.friend.email %></td>
+       <td><%=h friendship.friend.phone %></td>
+      <td>  <a href="<%=h friendship.friend.id %>">Szczegóły</a></td>
+    </tr>
+
+    <% end %>
+  </tbody>
+</table>
+
+
+<h2>Do grona przyjaciół dodali osobe:</h2>
+
+ <%end%>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Imie</th>
+      <th>Nazwisko</th>
+      <th>email</th>
+      <th>numer telefonu</th>
+      <th>akcja</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% for user in @user.inverse_friends %>
+    <tr>
+      <th scope="row"><%= @t=@t+1 %></th>
+      <td> <% if user.username.present? %><%=h user.username.gsub(/\s+/, '').capitalize %> <% else%> ---<%end%></td>
+      <td><% if user.surname.present? %><%=h user.surname.gsub(/\s+/, '').capitalize %> <% else%> ---<%end%></td>
+      <td><%=h user.email %></td>
+       <td><%=h user.phone %></td>
+      <td>  <a href="<%=h user.id %>">Szczegóły</a></td>
+    </tr>
+
+    <% end %>
+  </tbody>
+</table>
+ 
+
